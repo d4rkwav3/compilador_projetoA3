@@ -9,7 +9,7 @@ tokens = (
     'DIVISAO',
     'ABRE_PAREN',
     'FECHA_PAREN',
-    'COMENTARIO'
+    'COMENTARIO'    
 )
 
 # expressões regulares para os tokens mais simples
@@ -51,6 +51,8 @@ teste = open("sample.txt", 'r')
 #     print(linha)
 
 lexer.input(teste.read())
+
+teste.close()
 
 for token in lexer:
     print(f'Token: {token.type} -> Valor: {token.value}')
