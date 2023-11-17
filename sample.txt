@@ -1,10 +1,12 @@
 # ---------------------------------------------------------
 # código de exemplo para o projeto a3 de compiladores
-#
-#
-#
-#
-#
 # ---------------------------------------------------------
 
-3 + 4 * 10 + -20 *2
+int a = 3
+int b = 4
+
+se a + b > 5 então
+    imprima(verdadeiro)
+
+senão então
+    imprima(falso)
