@@ -5,16 +5,19 @@ reserved = {
     'se': 'P_RESERVADA_SE',
     'então': 'P_RESERVADA_ENTAO',
     'senão': 'P_RESERVADA_SENAO',
-    'retorne': 'P_RESERVADA_RETORNE',
-    'verdadeiro': 'P_RESERVADA_VERDADEIRO',
-    'falso': 'P_RESERVADA_FALSO',
     'imprima': 'P_RESERVADA_IMPRIMA',
-    'int': 'P_RESERVADA_TIPO_INTEIRO'
+    'int': 'P_RESERVADA_TIPO_INTEIRO',
+    'string': 'P_RESERVADA_TIPO_STRING',
+    'decimal': 'P_RESERVARDA_TIPO_DECIMAL',
+    'enquanto': 'P_RESERVARDA_LOOP_ENQUANTO',
+    'paracada': 'P_RESERVARDA_LOOP_PARACADA',
+    'em': 'P_RESERVADA_EM'
 }
 
 # lista de tokens
 tokens = [
     'NUM_INTEIRO',
+    'NUM_DECIMAL',
     'SIMBOL_ADICAO',
     'SIMBOL_SUBTRACAO',
     'SIMBOL_MULTIPLICACAO',
@@ -27,7 +30,10 @@ tokens = [
     'FECHA_PAREN',
     'SIMBOL_COMENTARIO',
     'ID',
-    'SIMBOL_ATRIBUICAO'
+    'SIMBOL_ATRIBUICAO',
+    'STRING_LITERAL',
+    'ACUMULADOR',
+    'REDUTOR'
  ] + list(reserved.values())
 
 # expressões regulares para os tokens mais simples
@@ -43,11 +49,19 @@ t_MAIORQUE = r'\>'
 t_MENORQUE = r'\<'
 t_MAIOROUIGUAL = r'\>\='
 t_MENOROUIGUAL = r'\<\='
+t_ACUMULADOR = r'\+\='
+t_REDUTOR = r'\-\='
 
 # expressões regulares que exigem ações adicionais são definidas usando uma função
 def t_NUM_INTEIRO(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+# números com casas decimais
+def t_NUM_DECIMAL(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
     return t
 
 # rastreia o número de linhas
@@ -58,11 +72,17 @@ def t_novalinha(t):
 # ignora as linha de comentários
 def t_SIMBOL_COMENTARIO(t):
     r'\#.*'
+    print(f'Linha de comentário ignorada -> {t.value}')
     pass
+
+# identifica as strings literais
+def t_STRING_LITERAL(t):
+    r'\"([^\\\n]|(\\.))*?\"'
+    return t
 
 # função para identificar variáveis
 def t_ID(t):
-    r'[a-zA-Z][a-z-A-Z0-9çÇãÃ]*'
+    r'[a-zA-Z][a-z-A-Z0-9çÇãÃéÉúÚ]*'
     t.type = reserved.get(t.value, 'ID') # Verifica se é uma palavra reservada
     return t
 
@@ -75,9 +95,6 @@ def t_error(t):
 lexer = lex.lex()
 
 teste = open("sample.txt", 'r')
-
-# for linha in teste:
-#     print(linha)
 
 lexer.input(teste.read())
 

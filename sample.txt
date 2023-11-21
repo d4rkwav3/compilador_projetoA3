@@ -2,11 +2,32 @@
 # código de exemplo para o projeto a3 de compiladores
 # ---------------------------------------------------------
 
-int a = 3
-int b = 4
+string msg1 = "Digite um número inteiro"
+string msg2 = "Digite outro número inteiro"
 
-se a + b > 5 então
-    imprima(verdadeiro)
+string num1 = leia(msg1)
+string num2 = leia(msg2)
+
+int a = int(num1)
+int b = int(num2)
+
+se a > b então
+    imprima("O primeiro número é maior que o segundo")
 
 senão então
-    imprima(falso)
+    imprima("O segundo número é maior que o primeiro")
+
+c = 0
+
+enquanto c < 5 então
+    imprima(c)
+    c += 1
+
+decimal d = (3 + 4 * 10 + -20 * 2) / 2
+
+imprima(d)
+
+string teste = "TESTE"
+
+paracada letra em teste então
+    imprima(letra)
