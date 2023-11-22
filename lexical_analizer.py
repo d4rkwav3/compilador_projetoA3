@@ -54,13 +54,13 @@ t_REDUTOR = r'\-\='
 
 # expressões regulares que exigem ações adicionais são definidas usando uma função
 def t_NUM_INTEIRO(t):
-    r'\d+'
+    r'[-]?\d+'
     t.value = int(t.value)
     return t
 
 # números com casas decimais
 def t_NUM_DECIMAL(t):
-    r'\d+\.\d+'
+    r'[-]?\d+\.\d+'
     t.value = float(t.value)
     return t
 
@@ -94,7 +94,7 @@ def t_error(t):
 # constroi o analizador léxico com base nas regras acima
 lexer = lex.lex()
 
-teste = open("sample.txt", 'r')
+teste = open("sample2.txt", 'r')
 
 lexer.input(teste.read())
 
