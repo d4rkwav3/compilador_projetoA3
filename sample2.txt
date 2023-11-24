@@ -1,1 +1,2 @@
-10 * 15 / 2
+inteiro a = (3 + 4 * 10 + -20 * 2)
+# palavra teste = "TESTE"

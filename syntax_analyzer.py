@@ -2,12 +2,23 @@ import ply.yacc as yacc
 # importa os tokens do analisador léxico, senão não funciona
 from lexical_analizer import tokens
 
+start = 'expressao'
+
 # define a procedência dos operadores
 precedence = (
     ('nonassoc', 'MENORQUE', 'MENOROUIGUAL', 'MAIORQUE', 'MAIOROUIGUAL'),  # operadores de comparação
     ('left', 'SIMBOL_ADICAO', 'SIMBOL_SUBTRACAO'),
     ('left', 'SIMBOL_MULTIPLICACAO', 'SIMBOL_DIVISAO'),
 )
+
+def p_expressao(p):
+    'expressao : declaracao'
+    p[0] = p[1]
+
+def p_declaracao_numeros(p):
+    'declaracao : P_RESERVADA_TIPO_INTEIRO ID SIMBOL_ATRIBUICAO fator'
+    print(f'Nova variável declarada de tipo {p[1]}: {p[2]}')
+    p[0] = p[4]
 
 # Deriva uma expressão para uma expressão ADIÇÃO termo
 def p_expressao_adicao(p):
