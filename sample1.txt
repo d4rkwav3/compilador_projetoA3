@@ -2,14 +2,14 @@
 # código de exemplo para o projeto a3 de compiladores
 # ---------------------------------------------------------
 
-string msg1 = "Digite um número inteiro"
-string msg2 = "Digite outro número inteiro"
+palavra msg1 = "Digite um número inteiro"
+palavra msg2 = "Digite outro número inteiro"
 
-string num1 = leia(msg1)
-string num2 = leia(msg2)
+palavra num1 = leia(msg1)
+palavra num2 = leia(msg2)
 
-int a = int(num1)
-int b = int(num2)
+inteiro a = int(num1)
+inteiro b = int(num2)
 
 se a > b então
     imprima("O primeiro número é maior que o segundo")
@@ -27,7 +27,7 @@ decimal d = (3 + 4 * 10 + -20 * 2) / 2
 
 imprima(d)
 
-string teste = "TESTE"
+palavra teste = "TESTE"
 
 paracada letra em teste então
     imprima(letra)
