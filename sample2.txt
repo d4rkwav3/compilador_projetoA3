@@ -1,2 +1,3 @@
-inteiro a = (3 + 4 * 10 + -20 * 2)
-# palavra teste = "TESTE"
+inteiro int = 10
+decimal dec = 2.5
+palavra test = "teste"

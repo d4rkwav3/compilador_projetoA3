@@ -7,7 +7,7 @@ reserved = {
     'senão': 'P_RESERVADA_SENAO',
     'imprima': 'P_RESERVADA_IMPRIMA',
     'inteiro': 'P_RESERVADA_TIPO_INTEIRO',
-    'palavra': 'P_RESERVADA_TIPO_STRING',
+    'palavra': 'P_RESERVADA_TIPO_PALAVRA',
     'decimal': 'P_RESERVARDA_TIPO_DECIMAL',
     'enquanto': 'P_RESERVARDA_LOOP_ENQUANTO',
     'paracada': 'P_RESERVARDA_LOOP_PARACADA',
@@ -33,7 +33,7 @@ tokens = [
     'SIMBOL_ATRIBUICAO',
     'STRING_LITERAL',
     'ACUMULADOR',
-    'REDUTOR'
+    'REDUTOR',
  ] + list(reserved.values())
 
 # expressões regulares para os tokens mais simples
@@ -52,22 +52,23 @@ t_MENOROUIGUAL = r'\<\='
 t_ACUMULADOR = r'\+\='
 t_REDUTOR = r'\-\='
 
+# números com casas decimais
+def t_NUM_DECIMAL(t):
+    r'[-]?[\d+]\.[\d+]'
+    t.value = float(t.value)
+    return t
+
 # expressões regulares que exigem ações adicionais são definidas usando uma função
 def t_NUM_INTEIRO(t):
     r'[-]?\d+'
     t.value = int(t.value)
     return t
 
-# números com casas decimais
-def t_NUM_DECIMAL(t):
-    r'[-]?\d+\.\d+'
-    t.value = float(t.value)
-    return t
-
 # rastreia o número de linhas
-def t_novalinha(t):
+def t_NOVALINHA(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+    print(f'---------------- Linha {t.lexer.lineno} ----------------')
 
 # ignora as linha de comentários
 def t_SIMBOL_COMENTARIO(t):
