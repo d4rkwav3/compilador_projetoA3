@@ -17,7 +17,7 @@ se a > b então
 senão então
     imprima("O segundo número é maior que o primeiro")
 
-int c = 0
+inteiro c = 0
 
 enquanto c < 5 então
     imprima(c)

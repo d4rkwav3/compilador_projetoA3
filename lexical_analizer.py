@@ -5,7 +5,6 @@ reserved = {
     'se': 'P_RESERVADA_SE',
     'então': 'P_RESERVADA_ENTAO',
     'senão': 'P_RESERVADA_SENAO',
-    'imprima': 'P_RESERVADA_IMPRIMA',
     'inteiro': 'P_RESERVADA_TIPO_INTEIRO',
     'palavra': 'P_RESERVADA_TIPO_PALAVRA',
     'decimal': 'P_RESERVARDA_TIPO_DECIMAL',
@@ -28,7 +27,7 @@ tokens = [
     'MENOROUIGUAL',
     'ABRE_PAREN',
     'FECHA_PAREN',
-    'SIMBOL_COMENTARIO',
+    'COMENTARIO',
     'ID',
     'SIMBOL_ATRIBUICAO',
     'STRING_LITERAL',
@@ -43,7 +42,6 @@ t_SIMBOL_MULTIPLICACAO = r'\*'
 t_SIMBOL_DIVISAO = r'/'
 t_ABRE_PAREN = r'\('
 t_FECHA_PAREN = r'\)'
-t_ignore = ' \t'
 t_SIMBOL_ATRIBUICAO = r'\='
 t_MAIORQUE = r'\>'
 t_MENORQUE = r'\<'
@@ -51,6 +49,7 @@ t_MAIOROUIGUAL = r'\>\='
 t_MENOROUIGUAL = r'\<\='
 t_ACUMULADOR = r'\+\='
 t_REDUTOR = r'\-\='
+t_ignore = ' \t'
 
 # números com casas decimais
 def t_NUM_DECIMAL(t):
@@ -68,13 +67,13 @@ def t_NUM_INTEIRO(t):
 def t_NOVALINHA(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-    print(f'---------------- Linha {t.lexer.lineno} ----------------')
+    print(f'\n---------------- Linha {t.lexer.lineno} ----------------\n')
 
 # ignora as linha de comentários
-def t_SIMBOL_COMENTARIO(t):
+def t_COMENTARIO(t):
     r'\#.*'
-    print(f'Linha de comentário ignorada -> {t.value}')
-    pass
+    # print(f'Linha de comentário ignorada -> {t.value}')
+    return t
 
 # identifica as strings literais
 def t_STRING_LITERAL(t):
@@ -96,10 +95,14 @@ def t_error(t):
 lexer = lex.lex()
 
 teste = open("sample2.txt", 'r')
-
 lexer.input(teste.read())
-
 teste.close()
+
+print('------------ Início da Analise Léxica ------------\n')
+print(f'\n---------------- Linha {lexer.lineno} ----------------\n')
 
 for token in lexer:
     print(f'Token: {token.type} -> Valor: {token.value}')
+
+lexer.lineno = 1
+print('\n-------------- Fim da Analise Léxica -------------\n')

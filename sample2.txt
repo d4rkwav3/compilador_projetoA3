@@ -1,3 +1,4 @@
-inteiro int = 10
-decimal dec = 2.5
-palavra test = "teste"
+se 2 > 1 então
+    imprima("tá certo")
+senão então
+    imprima("Deu ruim!")
