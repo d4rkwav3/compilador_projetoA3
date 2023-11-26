@@ -7,7 +7,7 @@ reserved = {
     'senão': 'P_RESERVADA_SENAO',
     'inteiro': 'P_RESERVADA_TIPO_INTEIRO',
     'palavra': 'P_RESERVADA_TIPO_PALAVRA',
-    'decimal': 'P_RESERVARDA_TIPO_DECIMAL',
+    'decimal': 'P_RESERVADA_TIPO_DECIMAL',
     'enquanto': 'P_RESERVARDA_LOOP_ENQUANTO',
     'paracada': 'P_RESERVARDA_LOOP_PARACADA',
     'em': 'P_RESERVADA_EM',
@@ -100,7 +100,7 @@ def t_error(t):
 # constroi o analizador léxico com base nas regras acima
 lexer = lex.lex()
 
-teste = open("sample2.txt", 'r')
+teste = open("sample1.txt", 'r')
 lexer.input(teste.read())
 teste.close()
 

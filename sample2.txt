@@ -1,3 +1,8 @@
-palavra msg1 = "Digite um número inteiro"
+decimal d = (3 + 4 * 10 + -20 * 2) / 2
 
-palavra num1 = leia(msg1)
+imprima(d)
+
+palavra teste = "TESTE"
+
+paracada letra em teste então
+    imprima(letra)
