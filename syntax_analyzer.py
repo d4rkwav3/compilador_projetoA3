@@ -42,9 +42,13 @@ def p_controle_senao(p):
     'controle : P_RESERVADA_SENAO P_RESERVADA_ENTAO'
     pass
 
-def p_loop(p):
+def p_loop_enquanto(p):
     'loop : P_RESERVARDA_LOOP_ENQUANTO expressao P_RESERVADA_ENTAO'
     p[0] = p[2]
+
+def p_loop_paracada(p):
+    'loop : P_RESERVARDA_LOOP_PARACADA ID P_RESERVADA_EM expressao P_RESERVADA_ENTAO'
+    p[0] = p[4]
 
 def p_expressao_comentario(p):
     'expressao : COMENTARIO'
