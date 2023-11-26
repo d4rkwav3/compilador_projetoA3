@@ -261,11 +261,7 @@ def p_fator_id(p):
 def p_nova_linha(p):
     'nova_linha : NOVA_LINHA'
     print('Nova linha')
-'''
-def p_empty(p):
-    'empty :'
-    pass
-'''
+
 # Deriva um fator para uma expressão entre parênteses
 def p_fator_expressao(p):
     'fator : ABRE_PAREN expressao FECHA_PAREN'
@@ -290,7 +286,7 @@ with open('sample1.txt', 'r') as string:
         result = parser.parse(linha, tracking=True)
         print(result)
     print('\n------------- Fim da Analise Sintática --------------\n')
-'''
+
 for k, v in inteiros.items():
     # print('\tinteiro', k, '->', v)
     variaveis.update({k: v})
@@ -305,4 +301,3 @@ for k, v in strings.items():
 
 for k, v in variaveis.items():
     print('\t', k, '->', v)
-'''

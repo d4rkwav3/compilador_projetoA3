@@ -179,3 +179,4 @@ pyrightconfig.json
 # cache do analisar sintático
 parser.out
 parsetab.py
+resultado.py
