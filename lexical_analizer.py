@@ -67,7 +67,7 @@ def t_NUM_INTEIRO(t):
 def t_NOVALINHA(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-    print(f'\n---------------- Linha {t.lexer.lineno} ----------------\n')
+    # print(f'\n---------------- Linha {t.lexer.lineno} ----------------\n')
 
 # ignora as linha de comentários
 def t_COMENTARIO(t):
@@ -99,7 +99,7 @@ lexer.input(teste.read())
 teste.close()
 
 print('------------ Início da Analise Léxica ------------\n')
-print(f'\n---------------- Linha {lexer.lineno} ----------------\n')
+# print(f'\n---------------- Linha {lexer.lineno} ----------------\n')
 
 for token in lexer:
     print(f'Token: {token.type} -> Valor: {token.value}')

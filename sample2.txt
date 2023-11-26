@@ -1,4 +1,5 @@
+inteiro a = 10
 se 2 > 1 então
-    imprima("tá certo")
+    imprima(a)
 senão então
-    imprima("Deu ruim!")
+    imprima(b)

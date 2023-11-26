@@ -3,6 +3,9 @@ import ply.yacc as yacc
 from lexical_analizer import tokens
 
 start = 'expressao'
+inteiros = {}
+decimais = {}
+strings = {}
 
 # define a procedência dos operadores
 precedence = (
@@ -42,17 +45,17 @@ def p_expressao_comentario(p):
 def p_declaracao_inteiro(p):
     'declaracao : P_RESERVADA_TIPO_INTEIRO ID SIMBOL_ATRIBUICAO NUM_INTEIRO'
     # print(f'{p[0]} {p[1]} {p[2]} {p[3]} {p[4]}')
-    # inteiros.update({p[2] : p[4]})
+    inteiros.update({p[2] : p[4]})
     p[0] = p[2]
 
 def p_declaracao_decimal(p):
     'declaracao : P_RESERVARDA_TIPO_DECIMAL ID SIMBOL_ATRIBUICAO NUM_DECIMAL'
-    # decimais.update({p[2] : p[4]})
+    decimais.update({p[2] : p[4]})
     p[0] = p[2]
 
 def p_declaracao_palavra(p):
     'declaracao : P_RESERVADA_TIPO_PALAVRA ID SIMBOL_ATRIBUICAO STRING_LITERAL'
-    # strings.update({p[2] : p[4]})
+    strings.update({p[2] : p[4]})
     p[0] = p[2]
 
 def p_declaracao_funcao_1_arg(p):
@@ -140,6 +143,16 @@ def p_fator_string(p):
 
 def p_fator_id(p):
     'fator : ID'
+    eh_int = p[1] in inteiros.keys()
+    eh_dec = p[1] in decimais.keys()
+    eh_str = p[1] in strings.keys()
+    erro_decl = f'Erro sintático! variável {p[1]} nunca foi declarada!'
+    
+    if eh_int or eh_dec or eh_str:
+        pass
+    else:
+        print(erro_decl)
+
     p[0] = p[1]
 
 # Deriva um fator para uma expressão entre parênteses
@@ -158,3 +171,12 @@ with open('sample2.txt', 'r') as string:
     for linha in string:
         result = parser.parse(linha, tracking=True)
         print(result)
+
+for k, v in inteiros.items():
+    print('\t', k, '->', v)
+
+for k, v in decimais.items():
+    print('\t', k, '->', v)    
+
+for k, v in strings.items():
+    print('\t', k, '->', v)
