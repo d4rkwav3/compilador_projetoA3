@@ -6,6 +6,10 @@ start = 'expressao'
 inteiros = {}
 decimais = {}
 strings = {}
+# controle_se = 0
+# controle_senao = 0
+# loop_enquanto = 0
+# loop_paracada = 0
 
 # define a procedência dos operadores
 precedence = (
@@ -36,18 +40,22 @@ def p_expressao_funcao(p):
 
 def p_controle_se(p):
     'controle : P_RESERVADA_SE expressao P_RESERVADA_ENTAO'
+    # controle_se += 1
     p[0] = p[2]
 
 def p_controle_senao(p):
     'controle : P_RESERVADA_SENAO P_RESERVADA_ENTAO'
+    # controle_senao += 1
     pass
 
 def p_loop_enquanto(p):
     'loop : P_RESERVARDA_LOOP_ENQUANTO expressao P_RESERVADA_ENTAO'
+    # loop_enquanto += 1
     p[0] = p[2]
 
 def p_loop_paracada(p):
     'loop : P_RESERVARDA_LOOP_PARACADA ID P_RESERVADA_EM expressao P_RESERVADA_ENTAO'
+    # loop_paracada += 1
     p[0] = p[4]
 
 def p_expressao_comentario(p):
@@ -56,7 +64,7 @@ def p_expressao_comentario(p):
 
 def p_declaracao_inteiro(p):
     'declaracao : P_RESERVADA_TIPO_INTEIRO ID SIMBOL_ATRIBUICAO NUM_INTEIRO'
-    # print(f'{p[0]} {p[1]} {p[2]} {p[3]} {p[4]}')
+    print(p[0], '=', p[2])
     inteiros.update({p[2] : p[4]})
     p[0] = p[2]
 
@@ -70,17 +78,29 @@ def p_declaracao_palavra(p):
     strings.update({p[2] : p[4]})
     p[0] = p[2]
 
-def p_declaracao_funcao_1_arg(p):
+def p_declaracao_funcao_1_arg_inteiro(p):
     'declaracao : P_RESERVADA_TIPO_INTEIRO ID SIMBOL_ATRIBUICAO ID ABRE_PAREN ID FECHA_PAREN'
     p[0] = p[1]
 
-def p_declaracao_funcao_1_literal(p):
+def p_declaracao_funcao_1_literal_inteiro(p):
     'declaracao : P_RESERVADA_TIPO_INTEIRO ID SIMBOL_ATRIBUICAO ID ABRE_PAREN STRING_LITERAL FECHA_PAREN'
     p[0] = p[6]
 
-def p_declaracao_funcao_0_arg(p):
+def p_declaracao_funcao_0_arg_inteiro(p):
     'declaracao : P_RESERVADA_TIPO_INTEIRO ID SIMBOL_ATRIBUICAO ID ABRE_PAREN FECHA_PAREN'
     p[0] = p[1]
+
+def p_declaracao_funcao_string(p):
+    'declaracao : P_RESERVADA_TIPO_PALAVRA ID SIMBOL_ATRIBUICAO funcao'
+    p[0] = p[4]
+
+def p_funcao_imprimir(p):
+    'funcao : FUNCAO_IMPRIMIR ABRE_PAREN fator FECHA_PAREN'
+    p[0] = p[2]
+
+def p_funcao_ler(p):
+    'funcao : FUNCAO_LER ABRE_PAREN fator FECHA_PAREN'
+    p[0] = p[2]
 
 def p_funcao(p):
     'funcao : ID ABRE_PAREN termo FECHA_PAREN'
@@ -88,6 +108,14 @@ def p_funcao(p):
 
 def p_atribuicao(p):
     'atribuicao : ID SIMBOL_ATRIBUICAO termo'
+    p[0] = p[3]
+
+def p_atribuicao_acumuladora(p):
+    'atribuicao : ID ACUMULADOR primitivo'
+    p[0] = p[3]
+
+def p_atribuicao_redutora(p):
+    'atribuicao : ID REDUTOR primitivo'
     p[0] = p[3]
 
 # Deriva uma expressão para uma expressão ADIÇÃO termo
@@ -120,7 +148,6 @@ def p_termo_maior(p):
     value = inteiros.get(p[1])
 
     if p[1] in inteiros.keys():
-        # print('Teste', value)
         p[0] = value > p[3]
     else:
         p[0] = p[1] > p[3]
@@ -130,7 +157,6 @@ def p_termo_maior_ou_igual(p):
     value = inteiros.get(p[1])
 
     if p[1] in inteiros.keys():
-        # print('Teste', value)
         p[0] = value >= p[3]
     else:
         p[0] = p[1] >= p[3]
@@ -138,9 +164,8 @@ def p_termo_maior_ou_igual(p):
 def p_termo_menor(p):
     'termo : termo MENORQUE fator'
     value = inteiros.get(p[1])
-
+    print('teste', value)
     if p[1] in inteiros.keys():
-        # print('Teste', value)
         p[0] = value < p[3]
     else:
         p[0] = p[1] < p[3]
@@ -175,15 +200,15 @@ def p_fator_num(p):
     'fator : primitivo'
     p[0] = p[1]
 
-def p_numero_inteiro(p):
+def p_primitivo_inteiro(p):
     'primitivo : NUM_INTEIRO'
     p[0] = p[1]
 
-def p_numero_decimal(p):
+def p_primitivo_decimal(p):
     'primitivo : NUM_DECIMAL'
     p[0] = p[1]
 
-def p_fator_string(p):
+def p_primitivo_string(p):
     'primitivo : STRING_LITERAL'
     p[0] = p[1]
 
@@ -200,7 +225,15 @@ def p_fator_id(p):
         print(erro_decl)
 
     p[0] = p[1]
+'''
+def p_nova_linha(p):
+    'nova_linha : empty'
+    print('Nova linha')
 
+def p_empty(p):
+    'empty :'
+    pass
+'''
 # Deriva um fator para uma expressão entre parênteses
 def p_fator_expressao(p):
     'fator : ABRE_PAREN expressao FECHA_PAREN'
@@ -208,7 +241,11 @@ def p_fator_expressao(p):
 
 # Informa sobre algum erro detectado
 def p_error(p):
-    print(f'Erro de sintaxe detectado! -> {p.value}')
+    print('p_error', p)
+    if p == None:
+        pass
+    else:
+        print(f'Erro de sintaxe detectado! -> {p.value}')
 
 # constrói o parser com base nas regras de derivação acima
 parser = yacc.yacc()

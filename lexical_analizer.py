@@ -10,7 +10,9 @@ reserved = {
     'decimal': 'P_RESERVARDA_TIPO_DECIMAL',
     'enquanto': 'P_RESERVARDA_LOOP_ENQUANTO',
     'paracada': 'P_RESERVARDA_LOOP_PARACADA',
-    'em': 'P_RESERVADA_EM'
+    'em': 'P_RESERVADA_EM',
+    'imprima': 'FUNCAO_IMPRIMIR',
+    'leia': 'FUNCAO_LER'
 }
 
 # lista de tokens
@@ -34,6 +36,7 @@ tokens = [
     'STRING_LITERAL',
     'ACUMULADOR',
     'REDUTOR',
+    'NOVA_LINHA'
  ] + list(reserved.values())
 
 # expressões regulares para os tokens mais simples
@@ -66,10 +69,11 @@ def t_NUM_INTEIRO(t):
     return t
 
 # rastreia o número de linhas
-def t_NOVALINHA(t):
+def t_NOVA_LINHA(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
     # print(f'\n---------------- Linha {t.lexer.lineno} ----------------\n')
+    # return t
 
 # ignora as linha de comentários
 def t_COMENTARIO(t):
@@ -104,7 +108,10 @@ print('------------ Início da Analise Léxica ------------\n')
 # print(f'\n---------------- Linha {lexer.lineno} ----------------\n')
 
 for token in lexer:
-    print(f'Token: {token.type} -> Valor: {token.value}')
+    if token.type == 'NOVA_LINHA':
+        print('\n')
+    else:
+        print(f'Token: {token.type} -> Valor: {token.value}')
 
 lexer.lineno = 1
 print('\n-------------- Fim da Analise Léxica -------------\n')
