@@ -1,5 +1,3 @@
-decimal d = (3 + 4 * 10 + -20 * 2) / 2
-
 imprima(d)
 
 palavra teste = "TESTE"

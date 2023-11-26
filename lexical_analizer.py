@@ -99,19 +99,3 @@ def t_error(t):
 
 # constroi o analizador léxico com base nas regras acima
 lexer = lex.lex()
-
-teste = open("sample1.txt", 'r')
-lexer.input(teste.read())
-teste.close()
-
-print('------------ Início da Analise Léxica ------------\n')
-# print(f'\n---------------- Linha {lexer.lineno} ----------------\n')
-
-for token in lexer:
-    if token.type == 'NOVA_LINHA':
-        print('\n')
-    else:
-        print(f'Token: {token.type} -> Valor: {token.value}')
-
-lexer.lineno = 1
-print('\n-------------- Fim da Analise Léxica -------------\n')
