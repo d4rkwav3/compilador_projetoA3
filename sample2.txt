@@ -1,5 +1,3 @@
-inteiro a = 10
-se 2 > 1 então
-    imprima(a)
-senão então
-    imprima(b)
+palavra num = "teste"
+se num == "teste" então
+    imprima(num)

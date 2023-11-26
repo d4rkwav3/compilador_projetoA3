@@ -25,6 +25,7 @@ tokens = [
     'MAIOROUIGUAL',
     'MENORQUE',
     'MENOROUIGUAL',
+    'COMPARAR_VALOR',
     'ABRE_PAREN',
     'FECHA_PAREN',
     'COMENTARIO',
@@ -43,6 +44,7 @@ t_SIMBOL_DIVISAO = r'/'
 t_ABRE_PAREN = r'\('
 t_FECHA_PAREN = r'\)'
 t_SIMBOL_ATRIBUICAO = r'\='
+t_COMPARAR_VALOR =  r'\=\='
 t_MAIORQUE = r'\>'
 t_MENORQUE = r'\<'
 t_MAIOROUIGUAL = r'\>\='

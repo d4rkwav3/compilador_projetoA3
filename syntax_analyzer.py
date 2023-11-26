@@ -26,6 +26,10 @@ def p_expressao_controle(p):
     'expressao : controle'
     p[0] = p[1]
 
+def p_expressao_loop(p):
+    'expressao : loop'
+    p[0] = p[1]
+
 def p_expressao_funcao(p):
     'expressao : funcao'
     p[0] = p[1]
@@ -37,6 +41,10 @@ def p_controle_se(p):
 def p_controle_senao(p):
     'controle : P_RESERVADA_SENAO P_RESERVADA_ENTAO'
     pass
+
+def p_loop(p):
+    'loop : P_RESERVARDA_LOOP_ENQUANTO expressao P_RESERVADA_ENTAO'
+    p[0] = p[2]
 
 def p_expressao_comentario(p):
     'expressao : COMENTARIO'
@@ -105,19 +113,53 @@ def p_termo_divisao(p):
 
 def p_termo_maior(p):
     'termo : termo MAIORQUE fator'
-    p[0] = p[1] > p[3]
+    value = inteiros.get(p[1])
+
+    if p[1] in inteiros.keys():
+        # print('Teste', value)
+        p[0] = value > p[3]
+    else:
+        p[0] = p[1] > p[3]
 
 def p_termo_maior_ou_igual(p):
     'termo : termo MAIOROUIGUAL fator'
-    p[0] = p[1] > p[3]
+    value = inteiros.get(p[1])
+
+    if p[1] in inteiros.keys():
+        # print('Teste', value)
+        p[0] = value >= p[3]
+    else:
+        p[0] = p[1] >= p[3]
 
 def p_termo_menor(p):
     'termo : termo MENORQUE fator'
-    p[0] = p[1] > p[3]
+    value = inteiros.get(p[1])
+
+    if p[1] in inteiros.keys():
+        # print('Teste', value)
+        p[0] = value < p[3]
+    else:
+        p[0] = p[1] < p[3]
 
 def p_termo_menor_ou_igual(p):
     'termo : termo MENOROUIGUAL fator'
-    p[0] = p[1] > p[3]        
+    value = inteiros.get(p[1])
+
+    if p[1] in inteiros.keys():
+        p[0] = value <= p[3]
+    else:
+        p[0] = p[1] <= p[3]        
+
+def p_termo_comparar_valor(p):
+    'termo : termo COMPARAR_VALOR fator'
+    value = inteiros.get(p[1]) if True else strings.get(p[1])
+
+    if p[1] in inteiros.keys():
+        p[0] = value == p[3]
+    elif p[1] in strings.keys():
+        p[0] = value == p[3]
+    else:
+        p[0] = p[1] == p[3] 
 
 # Deriva um termo para um fator
 def p_termo_fator(p):
@@ -167,16 +209,24 @@ def p_error(p):
 # constrói o parser com base nas regras de derivação acima
 parser = yacc.yacc()
 
+variaveis = {}
+
 with open('sample2.txt', 'r') as string:
     for linha in string:
         result = parser.parse(linha, tracking=True)
         print(result)
 
 for k, v in inteiros.items():
-    print('\t', k, '->', v)
+    # print('\tinteiro', k, '->', v)
+    variaveis.update({k: v})
 
 for k, v in decimais.items():
-    print('\t', k, '->', v)    
+    # print('\tdecimal', k, '->', v)
+    variaveis.update({k: v})
 
 for k, v in strings.items():
+    # print('\tpalavra', k, '->', v)
+    variaveis.update({k: v})
+
+for k, v in variaveis.items():
     print('\t', k, '->', v)
