@@ -4,7 +4,7 @@
 Desenvolvemos um analisador léxico e sintático em Python para uma linguagem de programação
 que chamamos de Brazuca, inspirada pelo Portugol, onde as instruções são feitas em
 português do Brasil e depois é transcrita para código Python válido, para maiores informações 
-sobre a estrutura básica da linguagem consultar o documentacao.docx nesse repositório.
+sobre a estrutura básica da linguagem consultar o arquivo documentacao.docx nesse repositório.
 
 ## Membros do Grupo
 
@@ -45,6 +45,6 @@ Inicie o compilador:
   python compilador.py
 ```
 
-Será solicitado que digite o nome do arquivo a ser analisado, se o arquivo passar 
-pela analise léxica e sintática, um novo arquivo chamado resultado.py, caso contrário 
+Será solicitado que digite o nome do arquivo a ser analisad (precisa estar na mesma pasta do projeto),
+se o arquivo passar pela analise léxica e sintática, um novo arquivo chamado resultado.py será criado, caso contrário 
 o erro será impresso no terminal.
